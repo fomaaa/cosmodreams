@@ -33,7 +33,7 @@ class Image3d extends \yii\db\ActiveRecord
         return [
             [['description', 'jpeg_hash'], 'string'],
             [['asset_bundle', 'jpeg_preview'], 'safe'],
-            [['name', 'author'], 'string', 'max' => 255],
+            [['name', 'author', 'name_en', 'description_en'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,6 +46,8 @@ class Image3d extends \yii\db\ActiveRecord
             'id' => 'ID',
             'asset_bundle' => 'Asset Bundle',
             'name' => 'Название',
+            'name_en' => 'Название (en)',
+            'description_en' => 'Описание (en)',
             'author' => 'Автор',
             'description' => 'Описание',
             'jpeg_preview' => 'Превью (128х128)'

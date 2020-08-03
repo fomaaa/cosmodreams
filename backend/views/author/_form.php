@@ -17,8 +17,10 @@ use yii\bootstrap4\ActiveForm;
                 <?php echo $form->errorSummary($model); ?>
 
                 <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                <?php echo $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
                 <?php echo $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
-                
+                <?php echo $form->field($model, 'description_en')->textInput(['maxlength' => true]) ?>
+
             </div>
             <div class="card-footer">
                 <?php echo Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

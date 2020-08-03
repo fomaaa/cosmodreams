@@ -37,10 +37,16 @@ $model->jpeg = json_decode($model->jpeg);
                     <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-6">
+                    <?php echo $form->field($model, 'name_en')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-md-6">
                     <?php echo $form->field($model, 'author')->dropDownList($author) ?>
                 </div>
                 <div class="col-md-12">
                     <?php echo $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+                </div>
+                <div class="col-md-12">
+                    <?php echo $form->field($model, 'description_en')->textarea(['rows' => 6]) ?>
                 </div>
 
             </div>

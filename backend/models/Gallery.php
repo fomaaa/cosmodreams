@@ -32,7 +32,7 @@ class Gallery extends \yii\db\ActiveRecord
     {
         return [
             [['description', 'jpeg_hash', 'jpeg_preview'], 'string'],
-            [['jpeg', 'name', 'author'], 'string', 'max' => 255],
+            [['jpeg', 'name', 'author', 'name_en', 'description_en'], 'string', 'max' => 255],
         ];
     }
 
@@ -45,8 +45,10 @@ class Gallery extends \yii\db\ActiveRecord
             'id' => 'ID',
             'jpeg' => 'Изображение',
             'name' => 'Название',
+            'name_en' => 'Название (en)',
             'author' => 'Автор',
             'description' => 'Описание',
+            'description_en' => 'Описание (en)',
         ];
     }
 }

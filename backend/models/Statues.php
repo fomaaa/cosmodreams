@@ -31,7 +31,7 @@ class Statues extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description', 'jpeg_hash'], 'string'],
+            [['description', 'jpeg_hash', 'name_en', 'description_en'], 'string'],
             [['asset_bundle', 'jpeg_preview'], 'safe'],
             [['name', 'author'], 'string', 'max' => 255],
         ];
@@ -48,7 +48,9 @@ class Statues extends \yii\db\ActiveRecord
             'name' => 'Название',
             'author' => 'Автор',
             'description' => 'Описание',
-            'jpeg_preview' => 'Превью (128х128)'
+            'jpeg_preview' => 'Превью (128х128)',
+            'name_en' => 'Название (en)',
+            'description_en' => 'Описание (en)',
         ];
     }
 }

@@ -28,7 +28,7 @@ class Author extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['name', 'description', 'name_en', 'description_en'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,7 +40,9 @@ class Author extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Имя',
+            'name_en' => 'Имя (en)',
             'description' => 'Описание',
+            'description_en' => 'Описание (en)',
         ];
     }
 }
