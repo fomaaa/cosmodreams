@@ -50,6 +50,12 @@ $config = [
                 'actions' => ['login'],
             ],
             [
+                'controllers' => ['api'],
+                'allow' => true,
+                'roles' => ['?'],
+                'actions' => ['get-content-data'],
+            ],
+            [
                 'controllers' => ['sign-in'],
                 'allow' => true,
                 'roles' => ['@'],

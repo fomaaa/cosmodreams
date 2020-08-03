@@ -35,10 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
 
                     'id',
-                    'asset_bundle',
                     'name',
-//                    'author',
-                    'description:ntext',
+                    'author',
                     // 'jpeg_hash:ntext',
                     // 'jpeg_preview:ntext',
                     
