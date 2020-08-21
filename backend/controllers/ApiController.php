@@ -29,6 +29,11 @@ class ApiController extends \yii\web\Controller
             $data['statues'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
         }
 
+        foreach ($data['scripts'] as $key => $item) {
+            $data['scripts'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
+            $data['scripts'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
+        }
+
         foreach ($data['images'] as $key => $item) {
             $data['images'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
             $data['images'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
@@ -69,7 +74,7 @@ class ApiController extends \yii\web\Controller
         $bundle =   Yii::getAlias('@storage') . '\web\source\1\assets_bundle\\' . $name;
         $bundle = str_replace('\\', '/', $bundle . $name);
 
-        return $bundle;
+        return $name;
     }
 
     public $headers;

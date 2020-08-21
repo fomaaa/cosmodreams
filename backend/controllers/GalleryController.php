@@ -72,7 +72,7 @@ class GalleryController extends Controller
             $model->jpeg_preview = json_encode($model->jpeg);
             $model->jpeg = json_encode($model->jpeg);
 
-            $model->save();
+            $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('create', [
@@ -97,7 +97,7 @@ class GalleryController extends Controller
             $model->jpeg_preview = json_encode($model->jpeg);
             $model->jpeg = json_encode($model->jpeg);
 
-            $model->save();
+            $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('update', [

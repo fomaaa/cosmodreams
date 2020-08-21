@@ -48,6 +48,9 @@ $model->jpeg = json_decode($model->jpeg);
                 <div class="col-md-12">
                     <?php echo $form->field($model, 'description_en')->textarea(['rows' => 6]) ?>
                 </div>
+                <div class="col-md-6">
+                    <?php echo $form->field($model, 'AR')->checkbox() ?>
+                </div>
 
             </div>
         </div>
