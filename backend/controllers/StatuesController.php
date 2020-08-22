@@ -74,7 +74,7 @@ class StatuesController extends Controller
             $model->jpeg_preview = json_encode($model->jpeg_preview);
             $model->asset_bundle = json_encode($model->asset_bundle);
 
-            $model->save();
+            $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('create', [
@@ -99,7 +99,7 @@ class StatuesController extends Controller
             $model->jpeg_preview = json_encode($model->jpeg_preview);
             $model->asset_bundle = json_encode($model->asset_bundle);
 
-            $model->save();
+            $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('update', [

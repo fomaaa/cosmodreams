@@ -71,8 +71,9 @@ class Script3dController extends Controller
             $model->jpeg_hash = $this->getHashFile($model->jpeg_preview);
             $model->jpeg_preview = json_encode($model->jpeg_preview);
             $model->asset_bundle = json_encode($model->asset_bundle);
-
-            $model->save();
+            $model->marker = json_encode($model->marker);
+        
+            $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('create', [
@@ -96,8 +97,9 @@ class Script3dController extends Controller
             $model->jpeg_hash = $this->getHashFile($model->jpeg_preview);
             $model->jpeg_preview = json_encode($model->jpeg_preview);
             $model->asset_bundle = json_encode($model->asset_bundle);
+            $model->marker = json_encode($model->marker);
 
-            $model->save();
+            $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('update', [

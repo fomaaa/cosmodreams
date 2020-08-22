@@ -10,8 +10,11 @@ use trntv\filekit\widget\Upload;
  * @var backend\models\Statues $model
  * @var yii\bootstrap4\ActiveForm $form
  */
+
 $model->jpeg_preview = json_decode($model->jpeg_preview);
 $model->asset_bundle = json_decode($model->asset_bundle);
+$model->marker = json_decode($model->marker);
+
 ?>
 
 <div class="statues-form">
@@ -41,6 +44,19 @@ $model->asset_bundle = json_decode($model->asset_bundle);
                             'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
                         ]);
                     ?>
+                </div>
+                <div class="col-md-6">
+                    <?php echo $form->field($model, 'marker')->widget(
+                        Upload::class,
+                        [
+                            'url' => ['/file/storage/upload'],
+                            'maxFileSize' => 5000000, // 5 MiB,
+                            'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
+                        ]);
+                    ?>
+                </div>
+                <div class="col-md-6">
+
                 </div>
                 <div class="col-md-6">
                     <?php echo $form->field($model, 'name')->textInput(['maxlength' => true]) ?>

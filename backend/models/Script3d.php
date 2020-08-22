@@ -32,7 +32,7 @@ class Script3d extends \yii\db\ActiveRecord
     {
         return [
             [['description', 'jpeg_hash'], 'string'],
-            [['asset_bundle', 'jpeg_preview'], 'safe'],
+            [['asset_bundle', 'jpeg_preview', 'marker'], 'safe'],
             [['name', 'author', 'name_en', 'description_en'], 'string', 'max' => 255],
         ];
     }
@@ -51,6 +51,7 @@ class Script3d extends \yii\db\ActiveRecord
             'jpeg_preview' => 'Превью (128х128)',
             'name_en' => 'Название (en)',
             'description_en' => 'Описание (en)',
+            'marker' => 'Маркер'
         ];
     }
 }
