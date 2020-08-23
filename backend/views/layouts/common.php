@@ -280,6 +280,18 @@ $logEntries[] = [
                             'options' => ['class' => 'nav-header'],
                         ],
                         [
+                            'label' => 'Логи API',
+                            'url' => ['/logs/index'],
+                            'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
+                            'active' => Yii::$app->controller->id === 'logs',
+                        ],
+                        [
+                            'label' => 'Документация API',
+                            'url' => ['/docs'],
+                            'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
+//                            'active' => Yii::$app->controller->id === 'logs',
+                        ],
+                        [
                             'label' => Yii::t('backend', 'RBAC Rules'),
                             'url' => '#',
                             'icon' => FAS::icon('user-shield', ['class' => ['nav-icon']]),

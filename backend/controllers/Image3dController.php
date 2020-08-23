@@ -70,7 +70,7 @@ class Image3dController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->jpeg_hash = $this->getHashFile($model->jpeg_preview);
             $model->jpeg_preview = json_encode($model->jpeg_preview);
-            $model->asset_bundle = json_encode($model->asset_bundle);
+//            $model->asset_bundle = json_encode($model->asset_bundle);
 
             $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);
@@ -95,7 +95,7 @@ class Image3dController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->jpeg_hash = $this->getHashFile($model->jpeg_preview);
             $model->jpeg_preview = json_encode($model->jpeg_preview);
-            $model->asset_bundle = json_encode($model->asset_bundle);
+//            $model->asset_bundle = json_encode($model->asset_bundle);
 
             $model->save(false);
             return $this->redirect(['update', 'id' => $model->id]);

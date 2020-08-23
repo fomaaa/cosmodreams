@@ -12,7 +12,7 @@ use trntv\filekit\widget\Upload;
  */
 
 $model->jpeg_preview = json_decode($model->jpeg_preview);
-$model->asset_bundle = json_decode($model->asset_bundle);
+//$model->asset_bundle = json_decode($model->asset_bundle);
 $model->marker = json_decode($model->marker);
 
 ?>
@@ -26,14 +26,7 @@ $model->marker = json_decode($model->marker);
                     <?php echo $form->errorSummary($model); ?>
                 </div>
                 <div class="col-md-6">
-                    <?php echo $form->field($model, 'asset_bundle')->widget(
-                        Upload::class,
-                        [
-                            'url' => ['/file/storage/upload-assets'],
-                            'maxFileSize' => 5000000, // 5 MiB,
-//                                'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
-                        ]);
-                    ?>
+                    <?php echo $form->field($model, 'asset_bundle')->textInput(['maxlength' => true]) ?>
                 </div>
                 <div class="col-md-6">
                     <?php echo $form->field($model, 'jpeg_preview')->widget(

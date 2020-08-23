@@ -53,7 +53,7 @@ $config = [
                 'controllers' => ['api'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['get-content-data'],
+                'actions' => ['get-content-data', 'login', 'auth', 'user-data', 'token'],
             ],
             [
                 'controllers' => ['sign-in'],

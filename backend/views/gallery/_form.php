@@ -26,7 +26,7 @@ $model->jpeg = json_decode($model->jpeg);
                     <?php echo $form->field($model, 'jpeg')->widget(
                         Upload::class,
                         [
-                            'url' => ['/file/storage/upload'],
+                            'url' => ['/file/storage/upload-with-thumb256'],
                             'maxFileSize' => 5000000, // 5 MiB,
                                 'acceptFileTypes' => new JsExpression('/(\.|\/)(gif|jpe?g|png)$/i'),
                         ]);

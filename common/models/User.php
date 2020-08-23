@@ -170,7 +170,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_NOT_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statuses())],
-            [['username'], 'filter', 'filter' => '\yii\helpers\Html::encode']
+            [['username'], 'filter', 'filter' => '\yii\helpers\Html::encode'],
+            ['device_id', 'string']
         ];
     }
 
