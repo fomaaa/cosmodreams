@@ -11,6 +11,7 @@ use backend\models\Logs;
 use backend\models\Masks;
 use backend\models\Script3d;
 use backend\models\Statues;
+use backend\models\UserData;
 use common\models\User;
 use Yii;
 use yii\web\Response;
@@ -45,6 +46,35 @@ class ApiController extends \yii\web\Controller
         }
 
         return parent::beforeAction($action);
+    }
+
+    public function actionUploadUserData()
+    {
+        if ($this->checkMethod('Post')) {
+            if ($error = $this->checkToken()) return $this->error('403', ['message' => $error]);
+            $fields = ['type'];
+            $error = array();
+            foreach ($fields as $key => $item) {
+                if (!isset($_POST[$item])) {
+                    $error[] = 'Field ' . $item . '  required';
+                }
+            }
+            if (!$file = $_FILES['media'])  $error[] = 'Media  required';
+            if ($error) return $this->error('422', ['status' => 'validation error', 'message' => $error]);
+            $file = Yii::$app->file->upload($file, $this->user, $_POST['type']);
+
+            if (is_array($file) && $file['error']) return $this->error('422', ['status' => 'validation error', 'message' => $file['error']]);
+
+            $data = new UserData();
+            $data->user_id = $this->user->id;
+            $data->type = (int) $_POST['type'];
+            $data->file = Yii::getAlias('@backendUrl') . '/images/' . $file;
+            $data->save(false);
+
+            return $this->response('201', ['status' => 'success', 'data' => $data]);
+        } else {
+            return $this->error('405', ['message' => 'Method Not Allowed']);
+        }
     }
 
     public function actionGetContentData()
@@ -95,8 +125,8 @@ class ApiController extends \yii\web\Controller
 
     private function checkToken()
     {
-//        if (!$this->token) return 'Missing Authorization Token';
-//        if (!$this->user) return 'Authorization token is not valid';
+        if (!$this->token) return 'Missing Authorization Token';
+        if (!$this->user) return 'Authorization token is not valid';
 
         return false;
     }
@@ -155,6 +185,7 @@ class ApiController extends \yii\web\Controller
                     }
                     $user->save(false);
                 }
+
                 $response = ['authToken' => $user->access_token, 'userData' => $this->getUserObject($user->id)];
                 return $this->response('200', $response);
             } else {

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use backend\models\UserData;
 use common\commands\AddToTimelineCommand;
 use common\models\query\UserQuery;
 use Yii;
@@ -171,7 +172,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_NOT_ACTIVE],
             ['status', 'in', 'range' => array_keys(self::statuses())],
             [['username'], 'filter', 'filter' => '\yii\helpers\Html::encode'],
-            ['device_id', 'string']
+            ['device_id', 'access_token', 'string']
         ];
     }
 
@@ -228,6 +229,10 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->auth_key;
     }
 
+    public function getUserData()
+    {
+        return $this->hasMany(UserData::className(), ['user_id' => 'id']);
+    }
     /**
      * Validates password
      *

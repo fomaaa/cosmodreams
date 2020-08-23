@@ -18,6 +18,9 @@ $config = [
             'enableAutoLogin' => true,
             'as afterLogin' => common\behaviors\LoginTimestampBehavior::class,
         ],
+        'file' => [
+            'class' => backend\components\File::class
+        ],
     ],
     'modules' => [
         'content' => [
@@ -53,7 +56,7 @@ $config = [
                 'controllers' => ['api'],
                 'allow' => true,
                 'roles' => ['?'],
-                'actions' => ['get-content-data', 'login', 'auth', 'user-data', 'token'],
+                'actions' => ['get-content-data', 'login', 'auth', 'user-data', 'get-user-data', 'token'],
             ],
             [
                 'controllers' => ['sign-in'],
