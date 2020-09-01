@@ -48,6 +48,23 @@ class ApiController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
+    public function actionDeleteMedia($id)
+    {
+        if ($this->checkMethod('Delete')) {
+            if ($error = $this->checkToken()) return $this->error('403', ['message' => $error]);
+
+            $media = UserData::find()->where(['user_id' => $this->user->id])->andWhere(['id' => $id, 'deleted_at' => NULL])->one();
+            if (!$media) return $this->error('404', ['message' => 'Media not found']);
+
+            $media->deleted_at = date("Y-m-d H:i:s");
+            $media->save(false);
+
+            return $this->response('200', ['status' => 'success']);
+        } else {
+            return $this->error('405', ['message' => 'Method Not Allowed']);
+        }
+    }
+
     public function actionUploadUserData()
     {
         if ($this->checkMethod('Post')) {
@@ -69,6 +86,7 @@ class ApiController extends \yii\web\Controller
             $data->user_id = $this->user->id;
             $data->type = (int) $_POST['type'];
             $data->file = Yii::getAlias('@backendUrl') . '/images/' . $file;
+            $data->preview = Yii::getAlias('@backendUrl') . '/images/preview/' . $file;
             $data->save(false);
 
             return $this->response('201', ['status' => 'success', 'data' => $data]);
@@ -91,18 +109,20 @@ class ApiController extends \yii\web\Controller
 
         foreach ($data['statues'] as $key => $item) {
 //            $data['statues'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
-            $data['statues'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
+            $data['objects'][$key] = $data['statues'][$key];
+            $data['objects'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
         }
-
+        unset($data['statues']);
         foreach ($data['scripts'] as $key => $item) {
 //            $data['scripts'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
             $data['scripts'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
+            $data['scripts'][$key]['marker'] = $this->setImage($item['marker']);
         }
 
-        foreach ($data['images'] as $key => $item) {
-//            $data['images'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
-            $data['images'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
-        }
+//        foreach ($data['images'] as $key => $item) {
+////            $data['images'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
+//            $data['images'][$key]['jpeg_preview'] = $this->setImage($item['jpeg_preview']);
+//        }
 
         foreach ($data['masks'] as $key => $item) {
 //            $data['masks'][$key]['asset_bundle'] = $this->setBundle($item['asset_bundle']);
@@ -125,11 +145,24 @@ class ApiController extends \yii\web\Controller
 
     private function checkToken()
     {
-        if (!$this->token) return 'Missing Authorization Token';
-        if (!$this->user) return 'Authorization token is not valid';
+//        if (!$this->token) return 'Missing Authorization Token';
+//        if (!$this->user) return 'Authorization token is not valid';
 
         return false;
     }
+
+    private function deleteMedia()
+    {
+        if ($this->checkMethod('Delete')) {
+            if ($error = $this->checkToken()) return $this->error('403', ['message' => $error]);
+
+
+            return $this->response('201', ['status' => 'success', 'data' => $data]);
+        } else {
+            return $this->error('405', ['message' => 'Method Not Allowed']);
+        }
+    }
+
     public function actionToken()
     {
         if ($this->checkMethod('Post')) {
@@ -196,9 +229,34 @@ class ApiController extends \yii\web\Controller
         }
     }
 
-    public function actionUser($id)
+    public function actionUser()
     {
+        if ($this->checkMethod('Get')) {
+            if ($error = $this->checkToken()) return $this->error('403', ['message' => $error]);
+            $image = UserData::find()->where(['user_id' => $this->user->id, 'type' => '0'])->andWhere(['deleted_at' => NULL])->all();
+            $video = UserData::find()->where(['user_id' => $this->user->id, 'type' => '1'])->andWhere(['deleted_at' => NULL])->all();
+            $data = $this->getUserFullData();
 
+            return $this->response('201', ['status' => 'success', 'userData' => $data]);
+        } else {
+            return $this->error('405', ['message' => 'Method Not Allowed']);
+        }
+    }
+
+    private function getUserFullData()
+    {
+        $photo = UserData::find()->select(['id as mediaId', 'file as photo', 'preview as photo_preview'])->where(['user_id' => $this->user->id, 'type' => '0'])->andWhere(['deleted_at' => NULL])->asArray()->all();
+        $video = UserData::find()->select(['id', 'file as video', 'preview as video_preview'])->where(['user_id' => $this->user->id, 'type' => '1'])->andWhere(['deleted_at' => NULL])->asArray()->all();
+
+
+        $data = [
+            'id' => $this->user->id,
+            'photo' => $photo,
+            'video' => $video,
+            'accounts' => [$this->user->username]
+        ];
+
+        return $data;
     }
 
 
@@ -249,11 +307,11 @@ class ApiController extends \yii\web\Controller
 
     private function getImagePreview($file) {
         $data = json_decode($file, true);
-        $thumb = Yii::getAlias('@storage') . '\web\source\1\preview256\\';
+        $thumb = Yii::getAlias('@storage') . '/web/source/1/preview256/';
         $url = Yii::getAlias('@storageUrl') . '/source/1/preview256/';
 
         if (is_array($data)) {
-            $filename = explode('\\', $data['path']);
+            $filename = explode('/', $data['path']);
         }
         $image_name = $filename[count($filename) - 1];
 

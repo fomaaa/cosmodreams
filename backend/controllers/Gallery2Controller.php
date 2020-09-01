@@ -136,7 +136,7 @@ class Gallery2Controller extends Controller
     public function getHashFile($file)
     {
         $name = $file['path'];
-        $name = explode('\\', $name);
+        $name = explode('/', $name);
         $name = $name[count($name) - 1];
 
         $path = \Yii::getAlias('@storage'). '/web/source/1/' . $name;

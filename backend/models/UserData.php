@@ -32,7 +32,7 @@ class UserData extends \yii\db\ActiveRecord
         return [
             [['user_id', 'file'], 'required'],
             [['user_id'], 'integer'],
-            [['type', 'file'], 'string'],
+            [['type', 'file', 'preview'], 'string'],
             [['created_at', 'deleted_at'], 'safe'],
         ];
     }

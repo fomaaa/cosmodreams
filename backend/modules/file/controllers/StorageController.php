@@ -42,11 +42,11 @@ class StorageController extends Controller
                 'deleteRoute' => 'upload-delete',
                 'on afterSave' => function ($event) {
                     $file = $event->file;
-                    $path = Yii::getAlias('@storage') . '\web\source\1\\';
+                    $path = Yii::getAlias('@storage') . '/web/source/1/';
                     $thumb = Yii::getAlias('@storage') . '/web/source/1/preview256/';
 //                    $bundle = Yii::getAlias('@storage') . '\web\source\1\preview256\\';
                     $name = $file->getPath();
-                    $name = explode('\\', $name);
+                    $name = explode('/', $name);
                     $name = $name[count($name) - 1];
                     $path = str_replace('\\', '/', $path . $name);
 //                    $bundle = str_replace('\\', '/', $bundle . $name);

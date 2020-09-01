@@ -222,17 +222,17 @@ $logEntries[] = [
                             'options' => ['class' => 'nav-header'],
                         ],
                         [
-                            'label' => 'Статуи',
+                            'label' => '3D объекты',
                             'url' => ['/statues/index'],
                             'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
                             'active' => Yii::$app->controller->id === 'statues',
                         ],
-                        [
-                            'label' => '3D картины',
-                            'url' => ['/image-3d/index'],
-                            'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
-                            'active' => Yii::$app->controller->id === 'image-3d',
-                        ],
+//                        [
+//                            'label' => '3D картины',
+//                            'url' => ['/image-3d/index'],
+//                            'icon' => FAS::icon('thumbtack', ['class' => ['nav-icon']]),
+//                            'active' => Yii::$app->controller->id === 'image-3d',
+//                        ],
                         [
                             'label' => '3D сценарии',
                             'url' => ['/script-3d/index'],

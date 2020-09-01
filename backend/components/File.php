@@ -15,7 +15,7 @@ class File extends Component
 
     public function __construct()
     {
-        $this->base_path = str_replace('/', '\\',\Yii::getAlias('@storage') . '\\web\source\user\\');
+        $this->base_path = str_replace('\\', '/',\Yii::getAlias('@storage') . '/web/source/user/');
     }
 
     public function upload($file, $user, $type)
@@ -23,23 +23,23 @@ class File extends Component
         if (!$file['error']) {
             if (!is_dir($folder = $this->base_path . $user->id)) {
                 mkdir($folder, 0777);
-                mkdir($folder . '\\preview' , 0777);
+                mkdir($folder . '/preview' , 0777);
             } else {
                 $folder = $this->base_path . $user->id;
             }
             $ext = $type ?  '.mp4' :  '.png';
             $file_name = md5($file['name'] . time()  . $file['tmp_name']) . $ext;
 
-            if (move_uploaded_file($file['tmp_name'], $folder . '\\' . $file_name)) {
-                $preview_folder = $folder . '\preview\\';
-                $this->doResize($folder . '\\' . $file_name,  $preview_folder . $file_name);
+            if (move_uploaded_file($file['tmp_name'], $folder . '/' . $file_name)) {
+                $preview_folder = $folder . '/preview/';
+                $this->doResize($folder . '/' . $file_name,  $preview_folder . $file_name);
 
                 return $file_name;
             } else {
-                return ['error' => 'Upload error'];
+                return ['error' => 'Upload error #2'];
             }
         } else {
-            return ['error' => 'Upload error'];
+            return ['error' => 'Upload error #1'];
         }
     }
 
@@ -85,9 +85,9 @@ class File extends Component
     public static function findDelimeter($name)
     {
         $a = substr_count($name, '/');
-        $b = substr_count($name, '\\');
+        $b = substr_count($name, '/');
 
-        return $a > $b ? '/' : '\\';
+        return $a > $b ? '/' : '/';
     }
 
 }

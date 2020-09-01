@@ -50,12 +50,12 @@
           {
             "in": "body",
             "name": "body",
-            "schema":{
-              "type" : "object",
-              "required" : "client_secret",
-              "properties" : {
-                "client_secret" : {
-                  "type" : "string"
+            "schema": {
+              "type": "object",
+              "required": "client_secret",
+              "properties": {
+                "client_secret": {
+                  "type": "string"
                 }
               }
             }
@@ -92,18 +92,18 @@
           {
             "in": "body",
             "name": "body",
-            "schema":{
-              "type" : "object",
-              "required" : "login",
-              "properties" : {
-                "login" : {
-                  "type" : "string"
+            "schema": {
+              "type": "object",
+              "required": "login",
+              "properties": {
+                "login": {
+                  "type": "string"
                 },
-                "login_token" : {
-                  "type" : "string"
+                "login_token": {
+                  "type": "string"
                 },
-                "device_id" : {
-                  "type" : "string"
+                "device_id": {
+                  "type": "string"
                 }
               }
             }
@@ -143,9 +143,9 @@
           {
             "in": "header",
             "name": "Authorization",
-            "schema":{
-              "type" : "string",
-              "required" : true
+            "schema": {
+              "type": "string",
+              "required": true
             }
           }
         ],
@@ -162,12 +162,52 @@
         }
       }
     },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Получение данных пользователя",
+        "operationId": "user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "422": {
+            "description": "Validation error"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          }
+        }
+      }
+    },
     "/user/upload": {
       "post": {
         "tags": [
           "user"
         ],
-        "summary": "Загрузка медиа",
+        "summary": "Загрузка медиа пользователя",
+        "description": "type - 0 изображение, 1 - видео (mp4)",
         "operationId": "upload",
         "consumes": [
           "multipart/form-data"
@@ -179,20 +219,66 @@
           {
             "in": "header",
             "name": "Authorization",
-            "schema":{
-              "type" : "string",
-              "required" : true
+            "schema": {
+              "type": "string",
+              "required": true
             }
           },
           {
             "in": "formData",
             "name": "type",
-            "type" : "integer"
+            "type": "integer"
           },
           {
             "in": "formData",
             "name": "media",
-            "type" : "file"
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "422": {
+            "description": "Validation error"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          }
+        }
+      }
+    },
+    "/user/media/{id}": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Удаление данных пользователя",
+        "operationId": "deleteMedia",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string",
+              "required": true
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
           }
         ],
         "responses": {
